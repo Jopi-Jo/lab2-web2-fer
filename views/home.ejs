@@ -10,11 +10,14 @@
   <div class="container">
     <h1>SQL ubacivanje (SQL Injection)</h1>
     <p>
-    Ovo je tipični primjer SQL ubacivanja. Ništa posebno, ali radi.
-    Poruka je plain text, a PIN skriven kako mora biti.
-    Može se upisati nešto u bazu, a kad se za poruku upiše 'OR 1=1' 
-    (možete kopirati odavde) onda se detektira SQL ubacivanje kao što je objašnjeno na predavanjima.
-    Sa checkboxom ubacivanje se uključi i isključi.
+    Sadržaj ove web aplikacije uči nas o opasnostima SQL ubacivanja. Ukoliko je gumb za uključenu ranjivost uključena, 
+    možete testirati ubacivanje SQL-a. Na primjer, upisivanjem: <b>Ana Anic' OR '1'='1</b> dobit ćete tautologiju i sve podatke
+    tražene iz baze.
+    </p>
+    <p>
+    Odznačite li gumb, ranjivost će biti omogućena jer se pregledava regeks, odnosno jesu li u polje upisane riječi koje su odvojene 
+    isključivo razmakom i je li isklučivo prvo slovo veliko. Za potrebe jednostavnosti primjera, koristi se engleska abeceda.
+    <br> Ostali znakovi poput: -,'." i slično bit će prepoznati kao nevažeći regeks te će se upozorenje ispisati na ekranu.
     </p>
 
     <div class="form-group">
