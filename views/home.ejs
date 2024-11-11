@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL ubacivanje</title>
+  <link rel="stylesheet" href="/styles/home.css">
+</head>
+<body>
+  <div class="container">
+    <h1>SQL ubacivanje (SQL Injection)</h1>
+    <p>
+    Ovo je tipični primjer SQL ubacivanja. Ništa posebno, ali radi.
+    Poruka je plain text, a PIN skriven kako mora biti.
+    Može se upisati nešto u bazu, a kad se za poruku upiše 'OR 1=1' 
+    (možete kopirati odavde) onda se detektira SQL ubacivanje kao što je objašnjeno na predavanjima.
+    Sa checkboxom ubacivanje se uključi i isključi.
+    </p>
+
+    <div class="form-group">
+      <label for="accept-checkbox">
+        <input type="checkbox" id="accept-checkbox" /> Ranjivost uključena
+      </label>
+    </div>
+    
+    <div class="form-group">
+      <label for="message-field">Poruka:</label>
+      <textarea id="message-field" rows="4" cols="50"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" />
+    </div>
+
+    <button id="submit-btn" onclick="submitMSG()">Submit</button>
+    <div id="toast" class="toast">
+        Action Unsuccessful!
+      </div>
+    
+  </div>
+  <script src="server.js"></script>
+</body>
+</html>
+
+<script>
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const toast = document.getElementById('toast');
+  const button = document.getElementById('submit-btn');
+
+  button.addEventListener('click', function() {
+    toast.classList.add('show');
+
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 3000);
+  });
+});
+
+async function submitMSG(){
+  let payload = {"field": document.querySelector("#message-field").value, "checked": document.querySelector("#accept-checkbox").checked}
+  if(!payload.checked){
+    payload.field = encodeURIComponent(payload.field)
+  }
+  fetch('http://localhost:3000/submitData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.json())
+      .then(data => {
+        const toast = document.getElementById('toast');
+        toast.textContent = JSON.stringify(data)
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+      
+      
+    
+}
+
+</script>
