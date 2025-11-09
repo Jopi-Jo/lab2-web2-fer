@@ -9,7 +9,7 @@ const pool = new Pool({
     port: 5432,
 });
 
-const sql_create_sessions = `CREATE TABLE session (
+const sql_create_sessions = `CREATE TABLE IF NOT EXISTS session (
     sid varchar NOT NULL COLLATE "default",
     sess json NOT NULL,
     expire timestamp(6) NOT NULL
