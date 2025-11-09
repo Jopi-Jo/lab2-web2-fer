@@ -1,26 +1,21 @@
-const express = require('express');
 const {Pool} = require('pg');
 
 const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: 'web2_zad2',
-    password: process.env.DB_PASSWORD,
-    port: 5432
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
 });
 
 const sql_create_sessions = `CREATE TABLE IF NOT EXISTS session (
     sid varchar NOT NULL COLLATE "default",
     sess json NOT NULL,
     expire timestamp(6) NOT NULL
-  )
-  WITH (OIDS=FALSE);`
+  );`;
 
 const sql_create_session_index1 = `ALTER TABLE session ADD CONSTRAINT session_pkey PRIMARY KEY (sid) NOT DEFERRABLE INITIALLY IMMEDIATE`
 const sql_create_session_index2 = `CREATE INDEX IDX_session_expire ON session(expire)`
 
 
-const sql_create_users = `CREATE TABLE users (
+const sql_create_users = `CREATE TABLE IF NOT EXISTS users (
     user_id serial,
     name varchar NOT NULL,
     password varchar NOT NULL
