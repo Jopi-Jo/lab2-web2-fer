@@ -16,17 +16,17 @@ const sql_create_session_index2 = `CREATE INDEX IF NOT EXISTS IDX_session_expire
 
 const sql_create_users = `CREATE TABLE IF NOT EXISTS users (
     user_id serial PRIMARY KEY,
-    name varchar NOT NULL,
+    name varchar NOT NULL UNIQUE,
     password varchar NOT NULL
   );
 `;
 
 const sql_insert_into_users = `
-INSERT INTO users (name, password) VALUES ('Ivo Ivic', '1234');
-INSERT INTO users (name, password) VALUES ('Ana Anic', '5678');
-INSERT INTO users (name, password) VALUES ('Pero Peric', 'abcd');
-INSERT INTO users (name, password) VALUES ('Karlo Karlic', 'ab12');
-INSERT INTO users (name, password) VALUES ('Grga Grgic', 'qwerty');
+INSERT INTO users (name, password) VALUES ('Ivo Ivic', '1234') ON CONFLICT (name) DO NOTHING;
+INSERT INTO users (name, password) VALUES ('Ana Anic', '5678') ON CONFLICT (name) DO NOTHING;
+INSERT INTO users (name, password) VALUES ('Pero Peric', 'abcd') ON CONFLICT (name) DO NOTHING;
+INSERT INTO users (name, password) VALUES ('Karlo Karlic', 'ab12') ON CONFLICT (name) DO NOTHING;
+INSERT INTO users (name, password) VALUES ('Grga Grgic', 'qwerty') ON CONFLICT (name) DO NOTHING;
 
 `;
 
