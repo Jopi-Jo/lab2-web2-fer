@@ -17,7 +17,7 @@ const sql_create_session_index = `CREATE INDEX IF NOT EXISTS IDX_session_expire 
 
 const sql_create_users = `
    DROP TABLE users;
-   
+
    CREATE TABLE IF NOT EXISTS users (
     user_id serial PRIMARY KEY,
     name varchar UNIQUE,
@@ -31,8 +31,7 @@ INSERT INTO users (name, password) VALUES
 ('Ana Anic', '5678'),
 ('Pero Peric', 'abcd'),
 ('Karlo Karlic', 'ab12'),
-('Grga Grgic', 'qwerty')
-ON CONFLICT (name) DO NOTHING;
+('Grga Grgic', 'qwerty');
 `;
 
 (async () => {
