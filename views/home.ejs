@@ -67,7 +67,7 @@ async function submitMSG(){
   if(!payload.checked){
     payload.field = encodeURIComponent(payload.field)
   }
-  fetch('http://localhost:3000/submitData', {
+  fetch('https://lab2-web2-fer.onrender.com:3000/submitData', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
