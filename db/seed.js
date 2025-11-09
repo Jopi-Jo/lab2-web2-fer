@@ -23,12 +23,13 @@ const sql_create_users = `CREATE TABLE IF NOT EXISTS users (
 `;
 
 const sql_insert_into_users = `
-INSERT INTO users (name, password) VALUES ('Ivo Ivic', '1234') ON CONFLICT  DO NOTHING;
-INSERT INTO users (name, password) VALUES ('Ana Anic', '5678') ON CONFLICT  DO NOTHING;
-INSERT INTO users (name, password) VALUES ('Pero Peric', 'abcd') ON CONFLICT  DO NOTHING;
-INSERT INTO users (name, password) VALUES ('Karlo Karlic', 'ab12') ON CONFLICT DO NOTHING;
-INSERT INTO users (name, password) VALUES ('Grga Grgic', 'qwerty') ON CONFLICT DO NOTHING;
-
+INSERT INTO users (name, password) VALUES
+('Ivo Ivic', '1234'),
+('Ana Anic', '5678'),
+('Pero Peric', 'abcd'),
+('Karlo Karlic', 'ab12'),
+('Grga Grgic', 'qwerty')
+ON CONFLICT (name) DO NOTHING;
 `;
 
 (async () => {
