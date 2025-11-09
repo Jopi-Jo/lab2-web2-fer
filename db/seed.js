@@ -11,7 +11,8 @@ const sql_create_sessions = `CREATE TABLE IF NOT EXISTS session (
     expire timestamp(6) NOT NULL
   );`;
 
-const sql_create_session_index2 = `CREATE INDEX IF NOT EXISTS IDX_session_expire ON session(expire)`
+  
+const sql_create_session_index = `CREATE INDEX IF NOT EXISTS IDX_session_expire ON session(expire)`
 
 
 const sql_create_users = `CREATE TABLE IF NOT EXISTS users (
