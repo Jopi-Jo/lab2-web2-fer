@@ -15,9 +15,12 @@ const sql_create_sessions = `CREATE TABLE IF NOT EXISTS session (
 const sql_create_session_index = `CREATE INDEX IF NOT EXISTS IDX_session_expire ON session(expire)`
 
 
-const sql_create_users = `CREATE TABLE IF NOT EXISTS users (
+const sql_create_users = `
+   DROP TABLE users;
+   
+   CREATE TABLE IF NOT EXISTS users (
     user_id serial PRIMARY KEY,
-    name varchar NOT NULL UNIQUE,
+    name varchar UNIQUE,
     password varchar NOT NULL
   );
 `;
