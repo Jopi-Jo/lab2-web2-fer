@@ -2,11 +2,11 @@ const express = require('express');
 const {Pool} = require('pg');
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'web2_projekt',
-    password: 'admin',
-    port: 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: 'web2_zad2',
+    password: process.env.DB_PASSWORD,
+    port: 5432
 });
 
 const sql_create_sessions = `CREATE TABLE IF NOT EXISTS session (
