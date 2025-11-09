@@ -1,28 +1,32 @@
-const {Pool} = require('pg');
+const { Pool } = require('pg');
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
 });
 
-const sql_create_sessions = `CREATE TABLE IF NOT EXISTS session (
+const sql_drop_users = `
+DROP TABLE IF EXISTS users CASCADE;
+`;
+
+const sql_create_sessions = `
+CREATE TABLE IF NOT EXISTS session (
     sid varchar NOT NULL COLLATE "default",
     sess json NOT NULL,
     expire timestamp(6) NOT NULL
-  );`;
+);
+`;
 
-  
-const sql_create_session_index = `CREATE INDEX IF NOT EXISTS IDX_session_expire ON session(expire)`
-
+const sql_create_session_index = `
+CREATE INDEX IF NOT EXISTS IDX_session_expire ON session(expire);
+`;
 
 const sql_create_users = `
-   DROP TABLE users;
-
-   CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS users (
     user_id serial PRIMARY KEY,
     name varchar UNIQUE,
     password varchar NOT NULL
-  );
+);
 `;
 
 const sql_insert_into_users = `
@@ -31,7 +35,8 @@ INSERT INTO users (name, password) VALUES
 ('Ana Anic', '5678'),
 ('Pero Peric', 'abcd'),
 ('Karlo Karlic', 'ab12'),
-('Grga Grgic', 'qwerty');
+('Grga Grgic', 'qwerty')
+ON CONFLICT (name) DO NOTHING;
 `;
 
 (async () => {
@@ -40,6 +45,7 @@ INSERT INTO users (name, password) VALUES
         await pool.query(sql_create_sessions);
         await pool.query(sql_create_session_index);
         console.log("Session table OK");
+        await pool.query(sql_drop_users);
         await pool.query(sql_create_users);
         await pool.query(sql_insert_into_users);
         console.log("Users table OK");
