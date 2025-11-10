@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodem server.js",
-    "start": "nodem server.js",
+    "dev": "node server.js",
+    "start": "node server.js",
     "seed": "node db/seed.js"
   },
   "author": "",
