@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 `;
 
+sql_users_name_unique = 'ALTER TABLE users ADD CONSTRAINT users_name_key UNIQUE (name);';
 
 const sql_insert_into_users = `
 INSERT INTO users (name, password) VALUES
@@ -49,6 +50,7 @@ INSERT INTO users (name, password) VALUES
         await pool.query(sql_create_session_index);
         console.log("Session table OK");
         await pool.query(sql_create_users);
+        await pool.query(sql_users_name_unique);
         await pool.query(sql_insert_into_users);
         console.log("Users table OK");
     } catch (err) {
