@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS session;
 `;
 
 const sql_create_sessions = `
-CREATE TABLE IF NOT EXISTS session (
+CREATE TABLE  session (
     sid varchar NOT NULL COLLATE "default",
     sess json NOT NULL,
     expire timestamp(6) NOT NULL
@@ -24,9 +24,9 @@ CREATE INDEX IF NOT EXISTS IDX_session_expire ON session(expire);
 `;
 
 const sql_create_users = `
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE  users (
     user_id serial PRIMARY KEY,
-    name varchar UNIQUE,
+    name varchar,
     password varchar NOT NULL
 );
 `;
@@ -39,7 +39,8 @@ INSERT INTO users (name, password) VALUES
 ('Ana Anic', '5678'),
 ('Pero Peric', 'abcd'),
 ('Karlo Karlic', 'ab12'),
-('Grga Grgic', 'qwerty');
+('Grga Grgic', 'qwerty')
+ON CONFLICT (name) DO NOTHING;
 `;
 
 (async () => {
