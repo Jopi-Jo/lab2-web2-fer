@@ -22,9 +22,10 @@ app.use(session({
     store: new pgSession({
         pool: db.pool,
     }),
-    secret: "web2_projekt",
+    secret: process.env.SESSION_SECRET || 'web2_projekt',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { secure: false }
 }))
 
 app.use('/', homeRouter);
