@@ -72,7 +72,6 @@ async function submitMSG() {
       body: JSON.stringify(payload)
     });
 
-    // If not OK, show text body (helps debugging 502)
     if (!resp.ok) {
       const text = await resp.text();
       document.getElementById('toast').textContent = `Error ${resp.status}: ${text || 'no body'}`;

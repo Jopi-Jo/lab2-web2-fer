@@ -18,7 +18,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//pohrana sjednica u postgres bazu korštenjem connect-pg-simple modula
 app.use(session({
     store: new pgSession({
         pool: db.pool,
