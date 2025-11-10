@@ -5,8 +5,10 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
+
 const sql_drop_users = `
-DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS session;
 `;
 
 const sql_create_sessions = `
