@@ -44,10 +44,10 @@ ON CONFLICT (name) DO NOTHING;
 (async () => {
     try {
         console.log("Creating and populating tables...");
+        await pool.query(sql_drop_users);
         await pool.query(sql_create_sessions);
         await pool.query(sql_create_session_index);
         console.log("Session table OK");
-        await pool.query(sql_drop_users);
         await pool.query(sql_create_users);
         await pool.query(sql_insert_into_users);
         console.log("Users table OK");
