@@ -58,29 +58,41 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-async function submitMSG(){
-  let payload = {"field": document.querySelector("#message-field").value, "checked": document.querySelector("#accept-checkbox").checked}
-  if(!payload.checked){
-    payload.field = encodeURIComponent(payload.field)
+async function submitMSG() {
+  try {
+    const payload = {
+      field: document.querySelector("#message-field").value,
+      checked: document.querySelector("#accept-checkbox").checked
+    };
+    if (!payload.checked) payload.field = encodeURIComponent(payload.field);
+
+    const resp = await fetch('/submitData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    // If not OK, show text body (helps debugging 502)
+    if (!resp.ok) {
+      const text = await resp.text();
+      document.getElementById('toast').textContent = `Error ${resp.status}: ${text || 'no body'}`;
+      console.error('Non-OK response', resp.status, text);
+      return;
+    }
+
+    // Only parse JSON if content-type says so
+    const ct = resp.headers.get('content-type') || '';
+    if (ct.includes('application/json')) {
+      const data = await resp.json();
+      document.getElementById('toast').textContent = JSON.stringify(data);
+    } else {
+      const text = await resp.text();
+      document.getElementById('toast').textContent = text;
+    }
+  } catch (err) {
+    console.error('Network or parsing error:', err);
+    document.getElementById('toast').textContent = 'Network error: ' + err.message;
   }
-  const response = await fetch('/submitData', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(response => response.json())
-      .then(data => {
-        const toast = document.getElementById('toast');
-        toast.textContent = JSON.stringify(data)
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-      
-      
-    
 }
 
 </script>
